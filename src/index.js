@@ -13,18 +13,16 @@ function generatePoem(event) {
 
   let instructionsInput = document.querySelector("#user-instructions");
   let apiKey = "8717badd797bf40d3ca2to48c422f094";
-  let prompt = `Generate a french poem about ${instructionsInput.value}`;
   let context =
-    "You are an AI Short French poem expert and love to write short poems.  Your mission is to generate a 4 line poem in basic HTML.  Follow the user instructions. Sign the poem at the end with 'SheCodesAI' inside a <strong> element. Leave out the ```html and ``` at the end";
-  let apiUrl = `https://api.shecodes.io/ai/v1/generate?prompt=${prompt}&context=${context}&key=${apiKey}`;
+    "You are a romantic Poem expert and love to write short poems. You mission is to generate a 4 line poem in basic HTML and separate each line with a <br />. Make sure to follow the user instructions. Do not include a title to the poem. Sign the poem with 'SheCodes AI' inside a <strong> element at the end of the poem and NOT at the beginning. Remove the ```html from the beginning and the ``` from the end.";
+  let prompt = `User instructions: Generate a French poem about ${instructionsInput.value}`;
+  let apiURL = `https://api.shecodes.io/ai/v1/generate?prompt=${prompt}&context=${context}&key=${apiKey}`;
 
-  console.log(`Prompt: ${prompt}`);
-  console.log(`Context: ${context}`);
-  console.log(`Generating poem...`);
-  //build API url
-  //make call to api
-  axios.get(apiUrl).then(displayPoem);
-  //display poem
+  let poemElement = document.querySelector("#poem");
+  poemElement.classList.remove("hidden");
+  poemElement.innerHTML = `<div class="generating">⏳ Generating a French poem about ${instructionsInput.value}</div>`;
+
+  axios.get(apiURL).then(displayPoem);
 }
 
 let poemFormElement = document.querySelector("#poem-generator-form");
